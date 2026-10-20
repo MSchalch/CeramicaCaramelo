@@ -1,0 +1,53 @@
+Fase / ID;Atividade;Otimista (h);Realista (h);Pessimista (h);Certeza;Descrição
+Planejamento e Documentação;;;;;;
+1;Levantamento e organização de requisitos;4;8;12;;Finalizado
+2;Documento de Visão (DVP);4;8;12;;Finalizado
+3;Estimativa detalhada;2;4;6;;
+4;Criação do Kanban;1;2;3;;
+5;Preparação de Slides (por entrega);4;8;12;;
+Banco de Dados;;;;;;
+1;Modelagem do banco (DER + regras);3,5;7;10,5;;
+2;Criação das tabelas e migrations;3;6;9;;
+3;Scripts iniciais (categorias, grupos, etc.);2;4;6;;
+Backend;;;;;;
+1;Configuração do ambiente;3;6;9;;
+2;Autenticação (login, JWT, criptografia);4,5;9;13,5;;
+3;API CRUD Cliente: Análise e modelagem;0,5;1;1,5;;
+4;API CRUD Cliente: Implementação CRUD;3;6;9;;
+5;API CRUD Cliente: Validações e regras;0,5;1;1,5;;
+6;API CRUD Cliente: Testes;0,5;1;1,5;;
+7;API CRUD Produto: Análise e modelagem;0,5;1;1,5;;
+8;API CRUD Produto: Implementação CRUD;3;6;9;;
+9;API CRUD Produto: Validações e regras;0,5;1;1,5;;
+10;API CRUD Produto: Testes;0,5;1;1,5;;
+11;Carrinho e Checkout;9,5;19;28,5;;
+12;Regras de pagamento e cupons;6,5;13;19,5;;
+13;Controle de estoque e lote;5;10;15;;
+14;API Chatbot: Integração Google Gemini API;2;4;6;;
+15;API Chatbot: Lógica de prompt com produtos;1,5;3;4,5;;
+16;API Chatbot: Endpoint de comunicação;1;2;3;;
+17;API Dashboard: Endpoint p/ gráfico de linhas;2;4;6;;
+18;API Dashboard: Exportação CSV;1,5;3;4,5;;
+19;Testes básicos backend;5,5;11;16,5;;
+Frontend;;;;;;
+1;Protótipos (Figma/HTML);4,5;9;13,5;;Finalizado
+2;Estrutura base e layout;4,5;9;13,5;;
+3;Front CRUD Cliente;5,5;11;16,5;;
+4;Front CRUD Produto;5,5;11;16,5;;
+5;Tela Carrinho e Checkout;8,5;17;25,5;;
+6;Painel Admin (Pedidos/Estoque);6,5;13;19,5;;
+7;Tela Dashboard: Estrutura base;1,5;3;4,5;;
+8;Tela Dashboard: Gráfico de linhas (Chart.js);2,5;5;7,5;;
+9;Tela Dashboard: Filtros e botão Exportar;1,5;3;4,5;;
+10;Componente Chatbot flutuante (UI);2;4;6;;
+11;Chatbot: Integração API e chat state;2,5;5;7,5;;
+12;Responsividade e ajustes finais;6,5;13;19,5;;
+Testes E2E (Cypress);;;;;;
+1;Cypress: Configuração e ambiente;1,5;3;4,5;;
+2;Cypress E2E: Autenticação e Perfil;1,5;3;4,5;;
+3;Cypress E2E: Carrinho e Checkout;3;6;9;;
+4;Cypress E2E: Produtos e Dashboard Admin;2;4;6;;
+Deploy e Integração;;;;;;
+1;Configuração CI/CD;4,5;9;13,5;;
+2;Deploy (frontend + backend + banco);3;6;9;;
+TOTAL GERAL;;141,5;283;424,5;;

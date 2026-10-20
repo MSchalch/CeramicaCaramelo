@@ -1,0 +1,26 @@
+# Build and dependencies
+**/node_modules/
+**/target/
+**/dist/
+**/dist-ssr/
+
+# Logs
+*.log
+**/logs/
+
+# IDE and OS
+.idea/
+**/.idea/
+.vscode/
+**/.vscode/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cypress artifacts
+**/cypress/videos/
+**/cypress/screenshots/

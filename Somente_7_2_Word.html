@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>7.2 Especificação dos Casos de Teste</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 10pt;
+      color: #000000;
+      margin: 20px;
+      background-color: #ffffff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      font-size: 10pt;
+      border: 1px solid #808080;
+    }
+    th, td {
+      border: 1px solid #808080;
+      padding: 6px 8px;
+      vertical-align: middle;
+      text-align: left;
+      font-family: Arial, sans-serif;
+      font-size: 10pt;
+    }
+    .header-dark {
+      background-color: #3b3838;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      padding: 8px;
+    }
+    .header-gray {
+      background-color: #d9d9d9;
+      color: #000000;
+      font-weight: bold;
+      text-align: center;
+    }
+    .label-col {
+      font-weight: bold;
+      width: 25%;
+      background-color: #ffffff;
+    }
+    .step-col {
+      text-align: center;
+      width: 8%;
+    }
+    .spacer {
+      margin: 10pt 0;
+      font-size: 8pt;
+      line-height: 8pt;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CT001 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT001 Cadastrar novo cliente com todos os dados obrigatórios e geração de Código Único</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0021, RN0021, RN0022, RN0023, RN0026, RNF0012, RNF0035</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional e Não funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (classe válida de dados pessoais, senha e endereço completo)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Usuário autenticado como Administrador (cy.loginAdmin()) e aplicação ativa em http://localhost:5173.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Nome: Cliente Requisitos; E-mail: requisitos@caramelo.com; CPF válido gerado por gerarCpfValido(); Telefone: (11) 98765-4321; Nascimento: 1994-06-15; Gênero: Masculino; Senha/Confirmação: SenhaForte@123; Endereço: Residência Principal, Apartamento, CEP 04538-133, Av. Brigadeiro Faria Lima, 3477, Itaim Bibi, São Paulo - SP, Tipo: AMBOS.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Acessar a rota /customer/new.</td><td>O sistema exibe o formulário "Novo Cliente".</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Preencher todos os dados pessoais obrigatórios (nome, email, cpf, telefone, dataNascimento, genero, senha e confirmarSenha).</td><td>Os campos aceitam os valores formatados sem mensagens de erro.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Preencher os campos obrigatórios do endereço inicial selecionando a finalidade AMBOS (RN0021 e RN0022).</td><td>Os dados de endereço ficam preenchidos corretamente.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">4</td><td>Clicar no botão Cadastrar Cliente.</td><td>O sistema exibe alerta de sucesso (.alert-success) e redireciona para /admin/customers.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">5</td><td>Verificar a linha correspondente ao cliente recém-cadastrado na tabela.</td><td>O cliente é listado como Ativo e possui um código único no formato CLI-XXXXXXXX (RNF0035).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Cliente persistido no PostgreSQL com endereço vinculado, senha criptografada e log de auditoria registrado (RNF0012).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/clientes.cy.ts e front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT002 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT002 Impedir cadastro de cliente quando as senhas de confirmação não coincidirem</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0021, RNF0032</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Não funcional (Segurança / Usabilidade)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (classe inválida: senha diferente de confirmarSenha)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Usuário na tela de cadastro de cliente (/customer/new).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Nome: Cliente Teste Invalido; CPF válido; Senha: SenhaForte@123; Confirmar Senha: SenhaDiferente@999.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Acessar /customer/new e preencher os dados pessoais básicos.</td><td>Campos preenchidos na tela.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Digitar SenhaForte@123 no campo senha e SenhaDiferente@999 no campo confirmarSenha.</td><td>O sistema exibe imediatamente o feedback visual (.invalid-feedback) com a mensagem "As senhas não coincidem".</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar no botão Cadastrar Cliente.</td><td>O sistema dispara alerta bloqueando o envio e permanece na rota /customer/new.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Nenhum registro de cliente inválido é gravado no banco de dados.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT003 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT003 Impedir cadastro de cliente com senha fraca (menos de 8 dígitos ou sem caractere especial)</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0021, RNF0031</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Não funcional (Segurança)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Análise de valor limite (7 caracteres vs. mín. 8) e Partição de equivalência (ausência de caractere especial)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Usuário na tela /customer/new.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Tentativa 1 (7 caracteres): Fraca@1; Tentativa 2 (sem caractere especial): SenhaSemEspecial123.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Acessar /customer/new e preencher nome, e-mail, CPF, telefone, nascimento e gênero.</td><td>Dados básicos preenchidos.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Informar Fraca@1 nos campos senha e confirmarSenha.</td><td>O sistema exibe feedback informando que a senha deve conter no mínimo 8 caracteres, maiúsculas, minúsculas e caracteres especiais.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Substituir a senha por SenhaSemEspecial123 em ambos os campos e clicar em Cadastrar Cliente.</td><td>O sistema exibe alerta de "Senha fraca", impede a submissão e mantém o usuário em /customer/new.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Cadastro bloqueado na interface e na Strategy ValidarDadosObrigatoriosClienteStrategy.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT004 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT004 Impedir cadastro de cliente com campos obrigatórios vazios ou CPF inválido/duplicado</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0021, RN0021, RN0022, RN0026</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Integração e Sistema / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (campos obrigatórios vazios, CPF com dígitos inválidos e CPF já existente)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Cliente marina.silva@email.com (CPF 529.982.247-25) previamente cadastrado na base via Migration V5.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Cenário A: Nome vazio ""; Cenário B: CPF inválido 111.111.111-11; Cenário C: CPF duplicado 529.982.247-25.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Tentar submeter o cadastro em /customer/new deixando o campo obrigatório nome ou endereço em branco.</td><td>O formulário/API bloqueia a operação exigindo o preenchimento de todos os dados obrigatórios (RN0026, RN0021, RN0022).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Preencher o formulário com o CPF inválido 111.111.111-11 e submeter.</td><td>A strategy ValidarCpfValidoStrategy rejeita o cadastro com mensagem de CPF inválido.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Preencher o formulário com o CPF já cadastrado 529.982.247-25 e submeter.</td><td>A strategy ValidarCpfUnicoStrategy impede a duplicidade retornando erro de CPF já cadastrado.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Base de clientes permanece íntegra sem registros incompletos ou duplicados.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Não; execução manual / Postman (POST /api/clientes).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT005 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT005 Consultar clientes por filtro (Nome, CPF e E-mail) e editar dados cadastrais</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0022, RF0024, RNF0012</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (filtros de busca por Nome, CPF e E-mail)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado e cliente previamente cadastrado na base.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Filtro por Nome, CPF e E-mail do cliente criado; Novo Nome: Cliente Teste Cypress Atualizado.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Acessar /admin/customers, digitar o CPF do cliente no campo de busca e clicar em Buscar.</td><td>A tabela filtra e exibe exatamente o registro do cliente correspondente (RF0024).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Realizar nova busca informando o e-mail e, em seguida, o nome do cliente.</td><td>Em ambas as consultas o cliente é localizado corretamente na listagem.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar no botão Ver Detalhes / Editar na linha do cliente.</td><td>O modal Gerenciar Perfil é aberto com os dados carregados.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">4</td><td>Alterar o campo nome para Cliente Teste Cypress Atualizado e clicar em Salvar Alterações.</td><td>O modal exibe mensagem de sucesso (.alert-success) confirmando a atualização (RF0022).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">5</td><td>Fechar o modal e pesquisar pelo novo nome na tabela.</td><td>A tabela exibe o cliente com o nome atualizado.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Nome do cliente atualizado no banco de dados e operação ALTERAR registrada em logs_transacao (RNF0012).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/clientes.cy.ts e front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT006 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT006 Alterar apenas a senha do cliente sem modificar outros dados cadastrais</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0028, RNF0031, RNF0032</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional e Não funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (atualização isolada de credencial com senha forte)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado em /admin/customers com cliente ativo localizado.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Nova Senha: NovaSenhaSegura@2026; Confirmar Senha: NovaSenhaSegura@2026.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Localizar o cliente em /admin/customers e abrir o modal Ver Detalhes / Editar.</td><td>Modal aberto mantendo os dados pessoais atuais intactos.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Preencher apenas os campos senha e confirmarSenha com NovaSenhaSegura@2026.</td><td>Campos validam positivamente a regra de senha forte e coincidência.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar em Salvar Alterações.</td><td>O sistema salva a nova senha criptografada sem exigir ou alterar outros dados e exibe alerta de sucesso.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Senha atualizada e criptografada no banco de dados; demais atributos cadastrais permanecem inalterados.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT007 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT007 Inativar e reativar o cadastro de um cliente com sucesso</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0023, RNF0012</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Transição de estados (Ativo -> Inativo -> Ativo)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado em /admin/customers e cliente com status Ativo.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Cliente: Cliente Teste Cypress Atualizado.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Buscar o cliente na tabela de /admin/customers e verificar a coluna de status.</td><td>O badge exibe o estado Ativo.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Clicar no botão Inativar Cliente e confirmar na caixa de diálogo.</td><td>O status do cliente na tabela muda imediatamente para o badge Inativo.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar no botão Reativar Cliente na mesma linha.</td><td>O status do cliente retorna para o badge Ativo.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Status do cliente atualizado no banco de dados e log de auditoria registrado.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/clientes.cy.ts e front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT008 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT008 Consultar histórico de transações/pedidos realizados pelo cliente</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0025</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC01 - Gerenciar Clientes</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (consulta de transações vinculadas ao cliente)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Média</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado em /admin/customers.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Cliente cadastrado na base.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Filtrar pelo cliente em /admin/customers.</td><td>Linha do cliente exibida na tabela.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Clicar no botão de ação Histórico de Pedidos.</td><td>O sistema abre o modal Histórico de Pedidos exibindo os dados do cliente e suas transações registradas.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Fechar o modal clicando no botão de fechar.</td><td>O modal é encerrado retornando à listagem.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Nenhuma alteração de dados; consulta concluída com sucesso.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT009 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT009 Adicionar novo endereço de entrega com frase curta sem alterar demais dados do cliente</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0026, RN0023, RNF0034</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC02 - Gerenciar Endereços e Cartões</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional e Não funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (composição completa de endereço de entrega)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado com modal de detalhes do cliente aberto.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Identificação (frase curta): Escritório Comercial; Tipo de Residência: Comercial; CEP: 01310-100; Logradouro: Avenida Paulista; Nº: 1000; Bairro: Bela Vista; Cidade: São Paulo; UF: SP; Tipo: ENTREGA.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>No modal do cliente, clicar na aba Endereços e depois no botão Novo Endereço.</td><td>O formulário de inclusão de endereço é exibido sem exigir edição dos dados pessoais (RNF0034).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Preencher a frase curta Escritório Comercial e todos os atributos obrigatórios da composição do endereço (RN0023).</td><td>Campos preenchidos corretamente.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar em Salvar Endereço.</td><td>O endereço Escritório Comercial - Avenida Paulista passa a constar na lista de endereços do cliente (RF0026).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Novo endereço de entrega vinculado ao cliente no banco de dados.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT010 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT010 Impedir cadastro de endereço com campos obrigatórios da composição vazios</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0026, RN0023</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC02 - Gerenciar Endereços e Cartões</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (campos obrigatórios de RN0023 omitidos)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Média</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Modal de cadastro de novo endereço aberto (no perfil ou durante o checkout).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Identificação: Casa Incompleta; CEP: vazio; Logradouro: vazio; Número: vazio.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Abrir o modal de Novo Endereço e preencher apenas o campo identificacao.</td><td>Demais campos obrigatórios permanecem vazios.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Clicar em Salvar Endereço.</td><td>O sistema bloqueia o salvamento e exibe alerta exigindo o preenchimento de todos os campos obrigatórios (RN0023).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Endereço incompleto não é adicionado à lista do cliente.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Não; execução manual.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT011 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT011 Associar novo cartão de crédito com bandeira permitida e definir como preferencial</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0027, RN0024, RN0025</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC02 - Gerenciar Endereços e Cartões</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (cartão válido com bandeira permitida)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Modal de gerenciamento de perfil do cliente aberto.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Número: 5412751234123456; Nome Impresso: CLIENTE REQUISITOS; Bandeira: MASTERCARD; CVV: 321; Preferencial: Marcado (true).</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Acessar a aba Cartões no modal do cliente e clicar em Novo Cartão.</td><td>Formulário de cartão de crédito é exibido.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Preencher número, nome impresso, selecionar a bandeira permitida MASTERCARD (RN0025), informar o CVV (RN0024) e marcar o checkbox Preferencial (RF0027).</td><td>Todos os campos são preenchidos.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar em Salvar Cartão.</td><td>O cartão é listado na aba com a bandeira MASTERCARD e o badge Preferencial visível.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Cartão persistido e marcado como preferencial para seleção automática no checkout.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/regras_negocio_cliente.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT012 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT012 Impedir associação de cartão de crédito sem dados obrigatórios ou com bandeira inválida</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0027, RN0024, RN0025</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC02 - Gerenciar Endereços e Cartões</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (CVV/número ausentes ou bandeira vazia)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Média</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Usuário na aba Cartões do perfil ou na seção de pagamento do /checkout.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Número: vazio; Nome Impresso: TESTE; Bandeira: não selecionada; CVV: vazio.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Iniciar inclusão de novo cartão deixando o número do cartão, bandeira ou código de segurança (CVV) em branco.</td><td>Campos obrigatórios de RN0024 e RN0025 ausentes.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Tentar salvar o cartão ou confirmar o pedido no checkout.</td><td>O sistema impede a operação e exige o preenchimento completo dos atributos obrigatórios do cartão e bandeira válida.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Cartão inválido não é associado ao cliente nem processado.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Não; execução manual.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT013 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT013 Incluir mais de um item no carrinho, alterar quantidades e calcular frete por CEP</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0031, RF0032, RF0034, RN0031</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência e Análise de valor limite (quantidades válidas dentro do estoque)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Catálogo carregado com as 20 peças ativas da Migration V5 em http://localhost:5173/.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Produto 1: quantidade inicial 2, depois alterada para 3; Produto 2: quantidade 1; CEP para cotação: 01310-100.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Na página inicial (/), definir a quantidade 2 no primeiro card de produto e clicar em Adicionar ao Carrinho (RF0032).</td><td>O sistema redireciona para /cart exibindo 1 item com quantidade 2.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Clicar em Continuar Comprando, selecionar quantidade 1 no segundo produto do catálogo e adicionar ao carrinho.</td><td>O carrinho (/cart) passa a listar 2 itens distintos (RF0031).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Alterar a quantidade do primeiro item diretamente no carrinho de 2 para 3.</td><td>O subtotal dos itens e o peso acumulado são recalculados imediatamente.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">4</td><td>Informar o CEP 01310-100 e clicar em Calcular (RF0034).</td><td>O sistema exibe o valor do frete calculado e atualiza o valor total do pedido.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Carrinho atualizado com 2 produtos distintos, quantidades ajustadas e frete cotado.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/compras_checkout.cy.ts e front-end/cypress/e2e/carrinho_deslogado_e_dashboard.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT014 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT014 Impedir adição ou alteração de quantidade no carrinho superior ao estoque disponível</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0031, RF0032, RN0031, RN0032</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas (Fluxo de Exceção E2)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Integração e Sistema / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Análise de valor limite (quantidade solicitada maior que o estoque disponível da peça)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Peça ativa no catálogo com estoque conhecido (ex.: Bowl Terracota Rústico com estoque de 15 unidades).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Quantidade solicitada: 50 unidades (superior ao limite de 15 em estoque).</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>No catálogo (/) ou no carrinho (/cart), tentar informar a quantidade 50 para a peça cujo estoque é 15.</td><td>O sistema exibe alerta informando que a quantidade solicitada supera o estoque disponível (RN0031, RN0032).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Tentar submeter um pedido via API (POST /api/pedidos) com quantidade maior que o estoque no banco.</td><td>A strategy ValidarEstoquePedidoStrategy rejeita a criação do pedido retornando "Estoque insuficiente para a peça...".</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Quantidade inválida é bloqueada e o estoque permanece íntegro.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Não; execução manual / Postman.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT015 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT015 Exigir login ao finalizar carrinho montado deslogado, preservar itens e concluir compra</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0031, RF0033, RF0038</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Transição de estados (Visitante deslogado -> Login obrigatório -> Checkout com carrinho preservado)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Usuário não autenticado (localStorage limpo).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Produto 1 com quantidade 3; CEP 01310-100; Login: marina.silva@email.com / Senha: 123456.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Sem estar logado, acessar /, adicionar um produto ao carrinho, alterar a quantidade para 3 e simular o frete em /cart.</td><td>O sistema permite gerenciar o carrinho e exibe o aviso de login no resumo (.aviso-login-carrinho).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Clicar em Finalizar Compra (.btn-iniciar-compra) ou tentar acessar /checkout diretamente pela URL.</td><td>O sistema bloqueia o acesso anônimo ao checkout, redireciona para /login e exibe "Faça login para finalizar a compra do seu pedido".</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Autenticar-se com marina.silva@email.com e senha 123456.</td><td>O sistema redireciona automaticamente de volta para /checkout preservando os 3 itens no resumo do pedido.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">4</td><td>Clicar em Confirmar Pedido.</td><td>O pedido é concluído e listado em /profile/orders com status EM PROCESSAMENTO.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Pedido registrado para a cliente autenticada e carrinho esvaziado após a compra.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/carrinho_deslogado_e_dashboard.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT016 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT016 Realizar compra com endereço e cartão pré-cadastrados e barrar valor divergente do total</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0033, RF0035, RF0036, RF0038</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência e Tabela de decisão (1 cartão com valor divergente vs. valor exato do pedido)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Cliente marina.silva@email.com autenticada (possui endereços e cartões pré-cadastrados na Migration V5).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Valor inválido no cartão único: 15.00 (apenas o frete); Valor válido: total exato do pedido (80.00).</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Adicionar uma peça ao carrinho e clicar em Iniciar Compra (RF0033).</td><td>Sistema carrega /checkout com endereço pré-cadastrado selecionado (RF0035) e cartão preferencial carregado (RF0036).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Alterar manualmente o valor do cartão único para 15.00 (menor que o total do pedido) e clicar em Confirmar Pedido.</td><td>O sistema bloqueia a operação exibindo alerta "Operação não permitida" e permanece em /checkout.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Restaurar o valor do cartão para o total exato da compra, clicar em Confirmar Pedido e, no modal de confirmação, clicar em Autorizar Pagamento.</td><td>O pedido é registrado com sucesso e exibido em /profile/orders com status EM PROCESSAMENTO (RF0038).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Pedido gravado com status inicial EM PROCESSAMENTO.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/compras_checkout.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT017 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT017 Realizar compra cadastrando novo endereço e novo cartão no checkout e incorporá-los ao perfil</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0035, RF0036, RN0023, RN0024, RN0025</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (incorporação opcional de endereço e cartão ao perfil durante o checkout)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Cliente lucas.mendes@email.com autenticado e com item no checkout (/checkout).</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Novo Endereço: Casa Praia, Casa, CEP 11600-000, Av. Beira Mar, 777, Praia Grande, São Sebastião - SP, opção Salvar no perfil marcada; Novo Cartão: 4111222233334444, LUCAS NOVO CARTAO, VISA, CVV 888, opção Salvar no perfil marcada.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>No /checkout, clicar em Novo Endereço, preencher todos os campos obrigatórios (RN0023) mantendo marcada a opção de incorporar ao perfil e salvar.</td><td>O novo endereço é selecionado para a entrega do pedido (RF0035).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Na seção de pagamento, selecionar digitação de novo cartão, preencher os dados (RN0024, RN0025) e marcar o checkbox Salvar no perfil (RF0036).</td><td>Dados do novo cartão prontos para pagamento.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Confirmar e autorizar o pedido no modal de confirmação.</td><td>Pedido finalizado e redirecionado para /profile/orders.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">4</td><td>Acessar /profile e verificar as abas Endereços e Cartões.</td><td>Tanto o endereço Casa Praia quanto o cartão VISA 4111222233334444 aparecem salvos no perfil do cliente.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Pedido criado e novos endereço e cartão permanentemente associados ao cadastro do cliente.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/compras_checkout.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT018 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT018 Pagar com mais de um cartão de crédito respeitando o valor mínimo de R$ 10,00 por cartão</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0036, RN0034</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Análise de valor limite (valor por cartão >= R$ 10,00 em múltiplos cartões)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Cliente beatriz.rocha@email.com autenticada em /checkout com 2 unidades da peça no carrinho.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Cartão 1 (MASTERCARD): R$ 30,00 (>= 10,00); Cartão 2 (VISA): saldo restante (Total - 30,00 >= 10,00).</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>No /checkout, clicar no botão Adicionar Outro Cartão (.btn-adicionar-outro-cartao).</td><td>O sistema passa a exibir 2 blocos de cartão de crédito (.card-pagamento-item).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Preencher os dados do Cartão 1 com valor 30.00 e do Cartão 2 com o valor restante exato da compra (ambos >= R$ 10,00, cumprindo RN0034).</td><td>Soma dos dois cartões iguala o valor total do pedido.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar em Confirmar Pedido e depois em Autorizar Pagamento.</td><td>A transação com múltiplos cartões é aprovada e o pedido é registrado com status EM PROCESSAMENTO.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Pedido salvo com dois registros vinculados em pedido_pagamentos.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/compras_checkout.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT019 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT019 Pagar com cartão de crédito combinado a cupons com saldo residual inferior a R$ 10,00</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0036, RF0037, RN0033, RN0035</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Análise de valor limite e Tabela de decisão (exceção da RN0035 permitindo cartão &lt; R$ 10,00 quando há cupons aplicados)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Cliente marina.silva@email.com autenticada em /checkout; cupons TROCA-50 (R$ 50,00) e CARAMELO20 (R$ 20,00) ativos.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Subtotal + Frete: R$ 79,50; Cupom de Troca: TROCA-50 (-R$ 50,00); Cupom Promocional: CARAMELO20 (-R$ 20,00); Saldo residual no cartão: R$ 9,50 (&lt; R$ 10,00).</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>No /checkout, informar o cupom de troca TROCA-50 e clicar em Aplicar.</td><td>O cupom de R$ 50,00 é adicionado à lista de cupons de troca aplicados.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Informar o cupom promocional CARAMELO20 e clicar em Aplicar (RN0033).</td><td>O desconto promocional de R$ 20,00 é aplicado, reduzindo o saldo restante para um valor inferior a R$ 10,00.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Verificar o valor calculado para o cartão de crédito, clicar em Confirmar Pedido e autorizar pagamento.</td><td>O sistema permite o pagamento no cartão com valor inferior a R$ 10,00 por tratar-se de saldo residual de cupons (RN0035) e registra o pedido em EM PROCESSAMENTO.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Pedido criado com sucesso e cupom TROCA-50 inativado no banco.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/compras_checkout.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT020 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT020 Utilizar cupom de troca superior ao total da compra (gerando troco) e bloquear cupom desnecessário</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0037, RF0038, RN0036, RNF0012</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">CDU01 - Gerenciar Vendas Eletrônicas</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Tabela de decisão (soma de cupons &gt; total da compra + tentativa de adição de cupom excedente)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Alta</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Cliente lucas.mendes@email.com autenticado em /checkout com 1 peça no carrinho; cupons TROCA-200 (R$ 200,00) e TROCA-15 (R$ 15,00) ativos.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Cupom 1: TROCA-200 (cobre 100% da compra e gera troco); Cupom 2 (excedente): TROCA-15.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>No /checkout, digitar o código TROCA-200 e clicar em Aplicar.</td><td>O cupom é aplicado, o saldo a pagar zera e o sistema exibe o alerta informando que será gerado um novo cupom de troca com o valor da diferença (RN0036).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Tentar aplicar um segundo cupom de troca (TROCA-15) quando a compra já está 100% coberta.</td><td>O sistema bloqueia a inclusão exibindo mensagem de que o cupom é desnecessário (RN0036).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Confirmar e autorizar o pedido sem necessidade de cartão de crédito.</td><td>O pedido é finalizado com status EM PROCESSAMENTO e um novo cupom TROCA-XXXXXXXX com o valor residual é gerado para o cliente no banco.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Cupom TROCA-200 inativado, novo cupom de troco gerado e ativo para o cliente, e TROCA-15 preservado intacto.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/compras_checkout.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT021 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT021 Validar KPIs, gráfico de linhas e filtros por período e categorias no Dashboard Analítico</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0055, RF0056, RN0065, RNF0011, RNF0051</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC07 - Consultar Dashboard e Relatórios</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema (E2E) / Funcional e Não funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Partição de equivalência (filtragem por subconjunto de categorias e intervalo de datas válido)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Média</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado (cy.loginAdmin()) e pedidos históricos populados pela Migration V9.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Categorias: Bowls, Pratos, Xícaras, Vasos, Travessas; Filtro específico: apenas Vasos.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Acessar a rota /dashboard.</td><td>A página carrega em menos de 1 segundo (RNF0011) exibindo "Painel Analítico de Vendas" e os 4 cards de KPI (Vendas Totais, Pedidos Realizados, Novos Clientes e Trocas Solicitadas).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Verificar a presença dos seletores de data, botões de categoria (Bowls, Pratos, Xícaras, Vasos, Travessas) e do gráfico Recharts.</td><td>O componente svg.recharts-surface é renderizado com linhas por categoria, legendas e tooltips em moeda (RNF0051).</td></tr>
+    <tr><td class="step-col" style="text-align:center;">3</td><td>Clicar em Limpar, selecionar apenas a categoria Vasos e clicar em Aplicar Filtros.</td><td>O gráfico é atualizado exibindo a série histórica filtrada para a categoria Vasos.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">4</td><td>Clicar em Selecionar Todas e Aplicar Filtros.</td><td>Todas as 5 categorias voltam a ser exibidas no gráfico.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">Dados analíticos exibidos com consistência em relação aos pedidos válidos da base.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Sim; Cypress — front-end/cypress/e2e/carrinho_deslogado_e_dashboard.cy.ts</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+  <p class="spacer">&nbsp;</p>
+
+  <!-- CT022 -->
+  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:10pt; border:1px solid #808080;">
+    <tr><th colspan="3" class="header-dark" style="background-color:#3b3838; color:#ffffff; font-weight:bold; text-align:left;">CT022 Impedir filtragem no Dashboard quando a data final for anterior à data inicial</th></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Requisitos rastreados</td><td colspan="2">RF0056</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Caso de uso relacionado</td><td colspan="2">UC07 - Consultar Dashboard e Relatórios</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Nível / Tipo</td><td colspan="2">Sistema / Funcional</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Técnica de projeto</td><td colspan="2">Análise de valor limite / Dados inválidos (dataFim &lt; dataInicio)</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Prioridade</td><td colspan="2">Média</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pré-condições</td><td colspan="2">Administrador autenticado na tela /dashboard.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Dados de teste</td><td colspan="2">Data de Início: 2026-10-15; Data de Fim: 2026-10-01.</td></tr>
+    <tr><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:8%;">Passo</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Ação</th><th class="header-gray" style="background-color:#d9d9d9; font-weight:bold; text-align:center; width:46%;">Resultado esperado</th></tr>
+    <tr><td class="step-col" style="text-align:center;">1</td><td>Na tela /dashboard, informar 2026-10-15 como Data de Início e 2026-10-01 como Data de Fim.</td><td>Datas preenchidas nos campos de filtro.</td></tr>
+    <tr><td class="step-col" style="text-align:center;">2</td><td>Submeter o formulário clicando em Aplicar Filtros.</td><td>O sistema impede a requisição inválida e exibe o alerta "A data de fim não pode ser anterior à data de início (RF0056)."</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Pós-condições</td><td colspan="2">O gráfico permanece íntegro sem disparar consulta inconsistente ao back-end.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Automatizado?</td><td colspan="2">Não; execução manual.</td></tr>
+    <tr><td class="label-col" style="font-weight:bold; width:25%;">Resultado da execução</td><td colspan="2">Aprovado; 18/10/2026; Matheus Schalch; Sem defeitos.</td></tr>
+  </table>
+
+</body>
+</html>

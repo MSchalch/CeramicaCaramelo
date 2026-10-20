@@ -1,0 +1,53 @@
+Fase / ID;Atividade;Otimista (h);Realista (h);Pessimista (h);Certeza;Observação;Descrição
+Planejamento e Documentação;;;;;;;
+1;Levantamento e organização de requisitos;;;;;Finalizado;
+2;Documento de Visão (DVP);3;6;9;X;Finalizado;
+3;Estimativa detalhada;;;;;Finalizado;
+4;Criação do Kanban;;;;;Finalizado;
+5;Preparação de Slides (por entrega);1;2;3;X;;
+Banco de Dados;;;;;;;
+1;Modelagem do banco (DER + regras);2,5;5;7,5;X;;
+2;Criação das tabelas e migrations (flyway);3;6;9;X;;
+3;Scripts de alteração do banco versionados;2;4;6;X;;
+Backend;;;;;;;
+1;Configuração do ambiente;;;;;Finalizado;
+2;Autenticação (login, JWT, criptografia);2;4;6;;Somente executar se sobrar tempo;
+3;API CRUD Cliente: Análise e modelagem;0,5;1;1,5;X;;
+4;API CRUD Cliente: Implementação CRUD;4,5;9;13,5;X;;CRUD Cliente incluindo gerenciamento de cartões e endereços
+5;API CRUD Cliente: Validações e regras;1;2;3;X;;
+6;API CRUD Cliente: Testes no Postman;0,5;1;1,5;X;;
+7;API CRUD Produto: Análise e modelagem;0,5;1;1,5;X;;
+8;API CRUD Produto: Implementação CRUD;3;6;9;X;;
+9;API CRUD Produto: Funcionalidade de troca;1,5;3;4,5;X;;
+10;API CRUD Produto: Validações e regras;0,5;1;1,5;X;;
+11;API CRUD Produto: Testes no Postman;0,5;1;1,5;X;;
+12;Carrinho e Checkout;4;8;12;X;;
+13;API CRUD cupons;2;4;6;X;;
+14;Regras de pagamento e cupons;2;4;6;X;;
+15;Controle de estoque e lote;2;4;6;X;;
+16;API Chatbot: Integração Google Gemini API;2;4;6;X;;
+17;API Chatbot: Lógica de prompt com produtos;1,5;3;4,5;X;;
+18;API Chatbot: Endpoint de comunicação;1;2;3;X;;
+19;API Dashboard: Endpoint p/ gráfico de linhas;2;4;6;X;;
+20;API Dashboard: Implementar filtros;1;2;3;X;;
+21;API Dashboard: Exportação CSV;1,5;3;4,5;X;;
+22;Integração API ViaCEP (Cálculo de Frete);2;4;6;X;;Adicionado conforme DVP
+Frontend;;;;;;;
+1;Protótipo;;;;;Finalizado;
+2;Estrutura base e layout da loja;4;8;12;X;;
+3;Implementação de barra de busca de produtos;1;2;3;X;;
+4;Tela de detalhes Produto;1;2;3;X;;
+5;Tela Carrinho e Checkout;8,5;17;25,5;X;;Restaurado: Integração frete, cupons e pagamentos
+6;Perfil do Cliente e Histórico de Pedidos;5,5;11;16,5;X;;Restaurado: Endereços, Cartões e Trocas
+7;Painel Admin: Gestão de Produtos e Pedidos;6,5;13;19,5;X;;Restaurado: Alteração de status e estoque
+8;Painel Admin: Dashboard de Análise;4;8;12;X;;Restaurado: Gráficos Chart.js e Exportação
+9;Componente Chatbot flutuante (UI);3;6;9;X;;Restaurado: Interface do Chatbot
+10;Responsividade e ajustes finais;5;10;15;X;;
+Testes E2E (Cypress);;;;;;;Atenção: Título estava repetido como "Deploy e Integração"
+1;Cypress: Configuração e ambiente;1,5;3;4,5;X;;
+2;Cypress E2E: Autenticação e Perfil;1,5;3;4,5;X;;
+3;Cypress E2E: Carrinho e Checkout;3;6;9;X;;
+4;Cypress E2E: Produtos e Dashboard Admin;2;4;6;X;;
+Deploy e Integração;;;;;;;
+1;Configuração CI/CD;4,5;9;13,5;X;Somente executar se sobrar tempo;
+2;Deploy (frontend + backend + banco);3;6;9;X;;
